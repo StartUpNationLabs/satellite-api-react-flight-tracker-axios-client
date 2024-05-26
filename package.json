@@ -1,0 +1,34 @@
+{
+  "name": "satellite-api-react-flight-tracker-axios",
+  "version": "1.0.0",
+  "description": "OpenAPI Axios client for satellite-api-react-flight-tracker",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/StartUpNationLabs/satellite-api-react-flight-tracker-axios-client.git"
+  },
+  "keywords": [
+    "axios",
+    "typescript",
+    "openapi-client",
+    "openapi-generator",
+    "satellite-api-react-flight-tracker"
+  ],
+  "license": "MIT",
+  "author": {
+    "name": "Appadoo Apoorva Srinivas"
+  },
+  "main": "./dist/index.js",
+  "typings": "./dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "prepare": "npm run build",
+    "gen": "npx openapi-generator-cli generate -i https://raw.githubusercontent.com/StartUpNationLabs/react-flight-tracker-satellite/develop/gen/openapiv2/proto/satellite/v1/satellite.swagger.json -g typescript-axios --additional-properties=npmName=satellite-api-react-flight-tracker,npmVersion=1.0.0 -o ."
+  },
+  "dependencies": {
+    "axios": "^1.6.1"
+  },
+  "devDependencies": {
+    "@types/node": "12.11.5 - 12.20.42",
+    "typescript": "^4.0 || ^5.0"
+  }
+}
