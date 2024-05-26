@@ -1,6 +1,6 @@
 {
   "name": "satellite-api-react-flight-tracker-axios",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "OpenAPI Axios client for satellite-api-react-flight-tracker",
   "repository": {
     "type": "git",
@@ -22,7 +22,7 @@
   "scripts": {
     "build": "tsc",
     "prepare": "npm run build",
-    "gen": "npx openapi-generator-cli generate -i https://raw.githubusercontent.com/StartUpNationLabs/react-flight-tracker-satellite/develop/gen/openapiv2/proto/satellite/v1/satellite.swagger.json -g typescript-axios --additional-properties=npmName=satellite-api-react-flight-tracker,npmVersion=1.0.0 -o ."
+    "gen": "npx openapi-generator-cli generate -i https://raw.githubusercontent.com/StartUpNationLabs/react-flight-tracker-satellite/develop/gen/openapiv2/proto/satellite/v1/satellite.swagger.json -g typescript-axios --additional-properties=npmName=satellite-api-react-flight-tracker,npmVersion=1.0.2 -o ."
   },
   "dependencies": {
     "axios": "^1.6.1"
