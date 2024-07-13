@@ -66,6 +66,19 @@ export interface RpcStatus {
 /**
  * 
  * @export
+ * @interface V1GetSatelliteGroupsResponse
+ */
+export interface V1GetSatelliteGroupsResponse {
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof V1GetSatelliteGroupsResponse
+     */
+    'groups'?: Array<string>;
+}
+/**
+ * 
+ * @export
  * @interface V1GetSatellitePositionsResponse
  */
 export interface V1GetSatellitePositionsResponse {
@@ -414,6 +427,35 @@ export const SatelliteServiceApiAxiosParamCreator = function (configuration?: Co
         },
         /**
          * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        satelliteServiceGetSatelliteGroups: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/v1/satellite/groups`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
          * @param {string} [time] 
          * @param {Array<string>} [groups] 
          * @param {*} [options] Override http request option.
@@ -477,6 +519,17 @@ export const SatelliteServiceApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async satelliteServiceGetSatelliteGroups(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<V1GetSatelliteGroupsResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.satelliteServiceGetSatelliteGroups(options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['SatelliteServiceApi.satelliteServiceGetSatelliteGroups']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
          * @param {string} [time] 
          * @param {Array<string>} [groups] 
          * @param {*} [options] Override http request option.
@@ -509,6 +562,14 @@ export const SatelliteServiceApiFactory = function (configuration?: Configuratio
         },
         /**
          * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        satelliteServiceGetSatelliteGroups(options?: any): AxiosPromise<V1GetSatelliteGroupsResponse> {
+            return localVarFp.satelliteServiceGetSatelliteGroups(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
          * @param {string} [time] 
          * @param {Array<string>} [groups] 
          * @param {*} [options] Override http request option.
@@ -536,6 +597,16 @@ export class SatelliteServiceApi extends BaseAPI {
      */
     public satelliteServiceGetSatelliteDetail(id: string, options?: RawAxiosRequestConfig) {
         return SatelliteServiceApiFp(this.configuration).satelliteServiceGetSatelliteDetail(id, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof SatelliteServiceApi
+     */
+    public satelliteServiceGetSatelliteGroups(options?: RawAxiosRequestConfig) {
+        return SatelliteServiceApiFp(this.configuration).satelliteServiceGetSatelliteGroups(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
