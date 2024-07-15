@@ -66,6 +66,19 @@ export interface RpcStatus {
 /**
  * 
  * @export
+ * @interface V1GetMinimalSatellitesResponse
+ */
+export interface V1GetMinimalSatellitesResponse {
+    /**
+     * 
+     * @type {Array<V1MinimalSatellite>}
+     * @memberof V1GetMinimalSatellitesResponse
+     */
+    'satellites'?: Array<V1MinimalSatellite>;
+}
+/**
+ * 
+ * @export
  * @interface V1GetSatelliteGroupsResponse
  */
 export interface V1GetSatelliteGroupsResponse {
@@ -88,6 +101,25 @@ export interface V1GetSatellitePositionsResponse {
      * @memberof V1GetSatellitePositionsResponse
      */
     'satellites'?: Array<V1Satellite>;
+}
+/**
+ * 
+ * @export
+ * @interface V1MinimalSatellite
+ */
+export interface V1MinimalSatellite {
+    /**
+     * 
+     * @type {string}
+     * @memberof V1MinimalSatellite
+     */
+    'noradCatId'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof V1MinimalSatellite
+     */
+    'objectName'?: string;
 }
 /**
  * 
@@ -394,6 +426,47 @@ export const SatelliteServiceApiAxiosParamCreator = function (configuration?: Co
     return {
         /**
          * 
+         * @param {string} [time] 
+         * @param {Array<string>} [groups] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        satelliteServiceGetMinimalSatellites: async (time?: string, groups?: Array<string>, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/v1/satellite/minimal`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (time !== undefined) {
+                localVarQueryParameter['time'] = (time as any instanceof Date) ?
+                    (time as any).toISOString() :
+                    time;
+            }
+
+            if (groups) {
+                localVarQueryParameter['groups'] = groups;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
          * @param {string} id 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -507,6 +580,19 @@ export const SatelliteServiceApiFp = function(configuration?: Configuration) {
     return {
         /**
          * 
+         * @param {string} [time] 
+         * @param {Array<string>} [groups] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async satelliteServiceGetMinimalSatellites(time?: string, groups?: Array<string>, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<V1GetMinimalSatellitesResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.satelliteServiceGetMinimalSatellites(time, groups, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['SatelliteServiceApi.satelliteServiceGetMinimalSatellites']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
          * @param {string} id 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -553,6 +639,16 @@ export const SatelliteServiceApiFactory = function (configuration?: Configuratio
     return {
         /**
          * 
+         * @param {string} [time] 
+         * @param {Array<string>} [groups] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        satelliteServiceGetMinimalSatellites(time?: string, groups?: Array<string>, options?: any): AxiosPromise<V1GetMinimalSatellitesResponse> {
+            return localVarFp.satelliteServiceGetMinimalSatellites(time, groups, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
          * @param {string} id 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -588,6 +684,18 @@ export const SatelliteServiceApiFactory = function (configuration?: Configuratio
  * @extends {BaseAPI}
  */
 export class SatelliteServiceApi extends BaseAPI {
+    /**
+     * 
+     * @param {string} [time] 
+     * @param {Array<string>} [groups] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof SatelliteServiceApi
+     */
+    public satelliteServiceGetMinimalSatellites(time?: string, groups?: Array<string>, options?: RawAxiosRequestConfig) {
+        return SatelliteServiceApiFp(this.configuration).satelliteServiceGetMinimalSatellites(time, groups, options).then((request) => request(this.axios, this.basePath));
+    }
+
     /**
      * 
      * @param {string} id 
