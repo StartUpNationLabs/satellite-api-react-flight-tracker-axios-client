@@ -22,7 +22,9 @@
   "scripts": {
     "build": "tsc",
     "prepare": "npm run build",
-    "gen": "npx openapi-generator-cli generate -i https://raw.githubusercontent.com/StartUpNationLabs/react-flight-tracker-satellite/develop/gen/openapiv2/proto/satellite/v1/satellite.swagger.json -g typescript-axios --additional-properties=npmName=satellite-api-react-flight-tracker,npmVersion=1.0.4 -o ."
+    "gen": "npx openapi-generator-cli generate -i https://raw.githubusercontent.com/StartUpNationLabs/react-flight-tracker-satellite/develop/gen/openapiv2/proto/satellite/v1/satellite.swagger.json -g typescript-axios --additional-properties=npmName=satellite-api-react-flight-tracker,npmVersion=%npm_package_version% -o .",
+    "patch-version": "npm version minor && npm run gen"
+
   },
   "dependencies": {
     "axios": "^1.6.1"
