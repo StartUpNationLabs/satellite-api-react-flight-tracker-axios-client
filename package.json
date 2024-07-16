@@ -1,6 +1,6 @@
 {
   "name": "satellite-api-react-flight-tracker-axios",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "OpenAPI Axios client for satellite-api-react-flight-tracker",
   "repository": {
     "type": "git",
