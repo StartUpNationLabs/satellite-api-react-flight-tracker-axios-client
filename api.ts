@@ -66,6 +66,37 @@ export interface RpcStatus {
 /**
  * 
  * @export
+ * @interface V1GeoPoint
+ */
+export interface V1GeoPoint {
+    /**
+     * 
+     * @type {number}
+     * @memberof V1GeoPoint
+     */
+    'lat'?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof V1GeoPoint
+     */
+    'lon'?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof V1GeoPoint
+     */
+    'altitude'?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof V1GeoPoint
+     */
+    'velocity'?: number;
+}
+/**
+ * 
+ * @export
  * @interface V1GetMinimalSatellitesResponse
  */
 export interface V1GetMinimalSatellitesResponse {
@@ -88,6 +119,19 @@ export interface V1GetSatelliteGroupsResponse {
      * @memberof V1GetSatelliteGroupsResponse
      */
     'groups'?: Array<string>;
+}
+/**
+ * 
+ * @export
+ * @interface V1GetSatellitePathResponse
+ */
+export interface V1GetSatellitePathResponse {
+    /**
+     * 
+     * @type {Array<V1GeoPoint>}
+     * @memberof V1GetSatellitePathResponse
+     */
+    'path'?: Array<V1GeoPoint>;
 }
 /**
  * 
@@ -529,6 +573,51 @@ export const SatelliteServiceApiAxiosParamCreator = function (configuration?: Co
         },
         /**
          * 
+         * @param {string} id 
+         * @param {string} [time] 
+         * @param {number} [resolution] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        satelliteServiceGetSatellitePath: async (id: string, time?: string, resolution?: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('satelliteServiceGetSatellitePath', 'id', id)
+            const localVarPath = `/v1/satellite/path/{id}`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (time !== undefined) {
+                localVarQueryParameter['time'] = (time as any instanceof Date) ?
+                    (time as any).toISOString() :
+                    time;
+            }
+
+            if (resolution !== undefined) {
+                localVarQueryParameter['resolution'] = resolution;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
          * @param {string} [time] 
          * @param {Array<string>} [groups] 
          * @param {*} [options] Override http request option.
@@ -616,6 +705,20 @@ export const SatelliteServiceApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
+         * @param {string} id 
+         * @param {string} [time] 
+         * @param {number} [resolution] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async satelliteServiceGetSatellitePath(id: string, time?: string, resolution?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<V1GetSatellitePathResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.satelliteServiceGetSatellitePath(id, time, resolution, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['SatelliteServiceApi.satelliteServiceGetSatellitePath']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
          * @param {string} [time] 
          * @param {Array<string>} [groups] 
          * @param {*} [options] Override http request option.
@@ -663,6 +766,17 @@ export const SatelliteServiceApiFactory = function (configuration?: Configuratio
          */
         satelliteServiceGetSatelliteGroups(options?: any): AxiosPromise<V1GetSatelliteGroupsResponse> {
             return localVarFp.satelliteServiceGetSatelliteGroups(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {string} id 
+         * @param {string} [time] 
+         * @param {number} [resolution] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        satelliteServiceGetSatellitePath(id: string, time?: string, resolution?: number, options?: any): AxiosPromise<V1GetSatellitePathResponse> {
+            return localVarFp.satelliteServiceGetSatellitePath(id, time, resolution, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -715,6 +829,19 @@ export class SatelliteServiceApi extends BaseAPI {
      */
     public satelliteServiceGetSatelliteGroups(options?: RawAxiosRequestConfig) {
         return SatelliteServiceApiFp(this.configuration).satelliteServiceGetSatelliteGroups(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {string} id 
+     * @param {string} [time] 
+     * @param {number} [resolution] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof SatelliteServiceApi
+     */
+    public satelliteServiceGetSatellitePath(id: string, time?: string, resolution?: number, options?: RawAxiosRequestConfig) {
+        return SatelliteServiceApiFp(this.configuration).satelliteServiceGetSatellitePath(id, time, resolution, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
